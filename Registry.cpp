@@ -11,10 +11,10 @@
 #include <windows.h>
 
 #include "AddObjGuid.h"
-#define AddObjProgId "CodeGuru.FastAddition"
+#define AddObjProgId L"CodeGuru.FastAddition"
 extern HMODULE g_hModule;
 
-BOOL HelperWriteKey(HKEY roothk, const char *lpSubKey, LPCTSTR val_name,
+BOOL HelperWriteKey(HKEY roothk, const WCHAR *lpSubKey, LPCTSTR val_name,
                     DWORD dwType, void *lpvData, DWORD dwDataSize) {
   //
   // Helper function for doing the registry write operations
@@ -59,21 +59,21 @@ HRESULT __stdcall DllRegisterServer(void) {
   //
 
   WCHAR *lpwszClsid;
-  char szBuff[MAX_PATH] = "";
-  char szClsid[MAX_PATH] = "", szInproc[MAX_PATH] = "", szProgId[MAX_PATH];
-  char szDescriptionVal[256] = "";
+  WCHAR szBuff[MAX_PATH] = L"";
+  WCHAR szClsid[MAX_PATH] = L"", szInproc[MAX_PATH] = L"", szProgId[MAX_PATH];
+  WCHAR szDescriptionVal[256] = L"";
 
   StringFromCLSID(CLSID_AddObject, &lpwszClsid);
 
-  wsprintf(szClsid, "%S", lpwszClsid);
-  wsprintf(szInproc, "%s\\%s\\%s", "clsid", szClsid, "InprocServer32");
-  wsprintf(szProgId, "%s\\%s\\%s", "clsid", szClsid, "ProgId");
+  wsprintf(szClsid, L"%S", lpwszClsid);
+  wsprintf(szInproc, L"%s\\%s\\%s", "clsid", szClsid, L"InprocServer32");
+  wsprintf(szProgId, L"%s\\%s\\%s", "clsid", szClsid, L"ProgId");
 
   //
   // write the default value
   //
-  wsprintf(szBuff, "%s", "Fast Addition Algorithm");
-  wsprintf(szDescriptionVal, "%s\\%s", "clsid", szClsid);
+  wsprintf(szBuff, L"%s", L"Fast Addition Algorithm");
+  wsprintf(szDescriptionVal, L"%s\\%s", L"clsid", szClsid);
 
   HelperWriteKey(HKEY_CLASSES_ROOT, szDescriptionVal,
                  NULL, // write to the "default" value
@@ -97,11 +97,11 @@ HRESULT __stdcall DllRegisterServer(void) {
   //
   // write the "ProgId" data under HKCR\CodeGuru.FastAddition
   //
-  wsprintf(szBuff, "%s", "Fast Addition Algorithm");
+  wsprintf(szBuff, L"%s", L"Fast Addition Algorithm");
   HelperWriteKey(HKEY_CLASSES_ROOT, AddObjProgId, NULL, REG_SZ, (void *)szBuff,
                  lstrlen(szBuff));
 
-  wsprintf(szProgId, "%s\\%s", AddObjProgId, "CLSID");
+  wsprintf(szProgId, L"%s\\%s", AddObjProgId, L"CLSID");
   HelperWriteKey(HKEY_CLASSES_ROOT, szProgId, NULL, REG_SZ, (void *)szClsid,
                  lstrlen(szClsid));
 
@@ -118,13 +118,13 @@ HRESULT __stdcall DllUnregisterServer(void) {
   //
   //
 
-  char szKeyName[256] = "", szClsid[256] = "";
+  WCHAR szKeyName[256] = L"", szClsid[256] = L"";
   WCHAR *lpwszClsid;
 
   //
   // delete the ProgId entry
   //
-  wsprintf(szKeyName, "%s\\%s", AddObjProgId, "CLSID");
+  wsprintf(szKeyName, L"%s\\%s", AddObjProgId, L"CLSID");
   RegDeleteKey(HKEY_CLASSES_ROOT, szKeyName);
   RegDeleteKey(HKEY_CLASSES_ROOT, AddObjProgId);
 
@@ -132,14 +132,14 @@ HRESULT __stdcall DllUnregisterServer(void) {
   // delete the CLSID entry for this COM object
   //
   StringFromCLSID(CLSID_AddObject, &lpwszClsid);
-  wsprintf(szClsid, "%S", lpwszClsid);
-  wsprintf(szKeyName, "%s\\%s\\%s", "CLSID", szClsid, "InprocServer32");
+  wsprintf(szClsid, L"%S", lpwszClsid);
+  wsprintf(szKeyName, L"%s\\%s\\%s", L"CLSID", szClsid, L"InprocServer32");
   RegDeleteKey(HKEY_CLASSES_ROOT, szKeyName);
 
-  wsprintf(szKeyName, "%s\\%s\\%s", "CLSID", szClsid, "ProgId");
+  wsprintf(szKeyName, L"%s\\%s\\%s", L"CLSID", szClsid, L"ProgId");
   RegDeleteKey(HKEY_CLASSES_ROOT, szKeyName);
 
-  wsprintf(szKeyName, "%s\\%s", "CLSID", szClsid);
+  wsprintf(szKeyName, L"%s\\%s", L"CLSID", szClsid);
   RegDeleteKey(HKEY_CLASSES_ROOT, szKeyName);
 
   return 1;

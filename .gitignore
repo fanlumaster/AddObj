@@ -1,4 +1,5 @@
 build64/
+build32/
 dlldata.c
 IAdd_i.c
 IAdd_p.c
