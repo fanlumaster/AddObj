@@ -6,8 +6,9 @@
 #include <objbase.h>
 #include <stdio.h>
 #include <conio.h>
+#include <winnt.h>
 #include "IAdd.h"
-/* #import "IAdd.tlb" */
+/* #import "IAdd.tlb" raw_interfaces_only */
 //
 // Here we do a #import on the DLL ,you can also do a #import on the .TLB
 // The #import directive generates two files in the output folders.
@@ -37,7 +38,7 @@ int main()
 
     pFastAddAlgorithm->SetFirstNumber(n1); //"->" overloading in action
     pFastAddAlgorithm->SetSecondNumber(n2);
-    nOutPut = pFastAddAlgorithm->DoTheAddition();
+    HRESULT res = pFastAddAlgorithm->DoTheAddition(&nOutPut);
 
-    printf("Output after adding %ld & %ld is %ld\n", n1, n2, nOutPut);
+    printf("Output after adding %ld & %ld is %ld.\n", n1, n2, nOutPut);
 }
