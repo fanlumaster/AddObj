@@ -6,3 +6,4 @@ IAdd_p.c
 IAdd.h
 /IAdd.tlb
 !test/IAdd.tlb
+!test/IAdd.h
