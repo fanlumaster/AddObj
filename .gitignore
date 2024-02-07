@@ -4,4 +4,5 @@ dlldata.c
 IAdd_i.c
 IAdd_p.c
 IAdd.h
-IAdd.tlb
+/IAdd.tlb
+!test/IAdd.tlb

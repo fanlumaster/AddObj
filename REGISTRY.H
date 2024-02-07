@@ -7,19 +7,13 @@
 
 // This function will register a component in the Registry.
 // The component calls this function from its DllRegisterServer function.
-#ifndef UNICODE
-#define UNICODE
-#endif // !UNICODE
-
 #include <objbase.h>
 
-HRESULT RegisterServer(HMODULE hModule, const CLSID &clsid,
-                       const char *szFriendlyName, const char *szVerIndProgID,
+HRESULT RegisterServer(HMODULE hModule, const CLSID &clsid, const char *szFriendlyName, const char *szVerIndProgID,
                        const char *szProgID);
 
 // This function will unregister a component.  Components
 // call this function from their DllUnregisterServer function.
-HRESULT UnregisterServer(const CLSID &clsid, const char *szVerIndProgID,
-                         const char *szProgID);
+HRESULT UnregisterServer(const CLSID &clsid, const char *szVerIndProgID, const char *szProgID);
 
 #endif

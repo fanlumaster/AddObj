@@ -1,5 +1,5 @@
-# generate and compile dll files
-# 默认是编译 64 位的 dll，如果指定 32 位，则编译 32 位 dll
+# generate and compile exe files
+# 默认是编译 64 位的 exe，如果指定 32 位，则编译 32 位 dll
 
 $currentDirectory = Get-Location
 $cmakeListsPath = Join-Path -Path $currentDirectory -ChildPath "CMakeLists.txt"
